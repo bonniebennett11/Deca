@@ -3,11 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pet Care Simulator</title>
+    <title>Wellness Pet - Mental Health Companion</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
+        <!-- Header with streaks -->
+        <div class="header">
+            <div class="streak-display">
+                <div class="streak">
+                    <span class="streak-icon">🔥</span>
+                    <span id="taskStreak">0</span> day streak
+                </div>
+                <div class="streak">
+                    <span class="streak-icon">💕</span>
+                    <span id="friendshipStreak">0</span> day friendship
+                </div>
+            </div>
+        </div>
+
         <!-- Pet name input -->
         <div class="name-section">
             <label for="petName">Pet Name:</label>
@@ -22,7 +36,7 @@
 
         <!-- Pet customization -->
         <div class="customize-section">
-            <label>Choose Your Pet:</label>
+            <label>Choose Your Wellness Companion:</label>
             <div class="pet-options">
                 <button class="pet-choice" data-pet="🦦">🦦 Otter</button>
                 <button class="pet-choice" data-pet="🦄">🦄 Unicorn</button>
@@ -34,8 +48,9 @@
 
         <!-- Pet display -->
         <h1 id="petNameDisplay">Buddy</h1>
-        <div class="pet">
-            <p id="petEmoji">🦦</p>
+        <div class="pet-container">
+            <p class="pet" id="petEmoji">🦦</p>
+            <p class="pet-mood" id="petMood">Feeling Good ✨</p>
         </div>
 
         <!-- Stats display -->
@@ -55,25 +70,65 @@
                 </div>
                 <span id="energyText">50</span> / 100
             </div>
+
+            <div class="stat">
+                <label>Health:</label>
+                <div class="stat-bar">
+                    <div id="healthBar" class="stat-fill stat-health"></div>
+                </div>
+                <span id="healthText">50</span> / 100
+            </div>
+
+            <div class="stat">
+                <label>Hunger:</label>
+                <div class="stat-bar">
+                    <div id="hungerBar" class="stat-fill stat-hunger"></div>
+                </div>
+                <span id="hungerText">50</span> / 100
+            </div>
+
+            <div class="stat">
+                <label>Cleanliness:</label>
+                <div class="stat-bar">
+                    <div id="cleanlinessBar" class="stat-fill stat-cleanliness"></div>
+                </div>
+                <span id="cleanlinessText">50</span> / 100
+            </div>
         </div>
 
-        <!-- Action buttons -->
-        <div class="button-group">
-            <button id="playBtn" class="button button-play">Play 🎮</button>
-            <button id="feedBtn" class="button button-feed">Feed 🍕</button>
-            <button id="restBtn" class="button button-rest">Rest 😴</button>
+        <!-- Coping Techniques Section -->
+        <div class="coping-section">
+            <h2>Coping Techniques 🧠</h2>
+            <p class="section-subtitle">Care for yourself & your companion</p>
+            <div class="button-group-large">
+                <button id="breatheBtn" class="button button-breathe">Breathing Exercise 🫁</button>
+                <button id="journalBtn" class="button button-journal">Journaling 📔</button>
+                <button id="musicBtn" class="button button-music">Listen to Music 🎵</button>
+                <button id="gratitudeBtn" class="button button-gratitude">Gratitude 🙏</button>
+                <button id="socialBtn" class="button button-social">Social Time 👫</button>
+            </div>
+        </div>
+
+        <!-- Food & Play Section -->
+        <div class="food-play-section">
+            <h2>Food & Activities 🎮</h2>
+            <div class="button-group-row">
+                <button id="healthyFoodBtn" class="button button-food">Healthy Food 🥗</button>
+                <button id="snackBtn" class="button button-snack">Snack 🍎</button>
+                <button id="playBtn" class="button button-play">Play 🎮</button>
+            </div>
         </div>
 
         <!-- Daily Tasks -->
         <div class="tasks-section">
-            <h2>Daily Tasks</h2>
+            <h2>Daily Wellness Tasks ⭐</h2>
             <div class="tasks-container">
                 <div class="task-card" id="task-groom">
                     <div class="task-info">
                         <span class="task-emoji">🧼</span>
                         <div>
-                            <p class="task-name">Groom</p>
-                            <p class="task-time">Morning (7am)</p>
+                            <p class="task-name">Self-Care Routine</p>
+                            <p class="task-time">Morning (7am - 12pm)</p>
                         </div>
                     </div>
                     <button class="task-button" data-task="groom">Complete</button>
@@ -83,8 +138,8 @@
                     <div class="task-info">
                         <span class="task-emoji">💪</span>
                         <div>
-                            <p class="task-name">Exercise</p>
-                            <p class="task-time">Afternoon (1pm)</p>
+                            <p class="task-name">Movement & Exercise</p>
+                            <p class="task-time">Afternoon (1pm - 6pm)</p>
                         </div>
                     </div>
                     <button class="task-button" data-task="exercise">Complete</button>
@@ -94,8 +149,8 @@
                     <div class="task-info">
                         <span class="task-emoji">🧘</span>
                         <div>
-                            <p class="task-name">Meditate</p>
-                            <p class="task-time">Evening (7pm)</p>
+                            <p class="task-name">Mindfulness/Meditation</p>
+                            <p class="task-time">Evening (7pm - 11pm)</p>
                         </div>
                     </div>
                     <button class="task-button" data-task="meditate">Complete</button>
@@ -105,6 +160,9 @@
 
         <!-- Status message -->
         <div class="message" id="statusMessage"></div>
+
+        <!-- Wellness Tip -->
+        <div class="wellness-tip" id="wellnessTip"></div>
     </div>
 
     <script src="script.js"></script>
