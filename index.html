@@ -96,25 +96,74 @@
             </div>
         </div>
 
+        <!-- Achievements Display -->
+        <div class="achievements-header">
+            <h2>🏆 Achievements</h2>
+            <button id="achievementsBtn" class="button-small">View Badges</button>
+        </div>
+
+        <!-- Achievements Modal -->
+        <div id="achievementsModal" class="modal hidden">
+            <div class="modal-content">
+                <span class="modal-close">&times;</span>
+                <h2>🏆 Your Achievements</h2>
+                <div class="achievements-grid" id="achievementsGrid">
+                    <!-- Achievements will be populated here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Log Your Actions Section -->
+        <div class="actions-section">
+            <h2>Log Your Real-World Actions 📱</h2>
+            
+            <!-- Snack Logger -->
+            <div class="input-card">
+                <label for="snackInput">🍎 What snack did you eat?</label>
+                <div class="input-group">
+                    <input type="text" id="snackInput" placeholder="e.g., apple, cookie, smoothie" maxlength="20">
+                    <button id="logSnackBtn" class="button button-food">Feed Pet</button>
+                </div>
+            </div>
+
+            <!-- Wellness Activity Logger -->
+            <div class="input-card">
+                <label for="activityInput">💪 What wellness activity did you do?</label>
+                <div class="input-group">
+                    <input type="text" id="activityInput" placeholder="e.g., walked, yoga, stretching" maxlength="20">
+                    <button id="logActivityBtn" class="button button-breathe">Submit Activity</button>
+                </div>
+            </div>
+
+            <!-- Gratitude Journal -->
+            <div class="input-card">
+                <label for="gratitudeInput">🙏 What are you grateful for today?</label>
+                <div class="input-group">
+                    <input type="text" id="gratitudeInput" placeholder="e.g., my family, good weather, rest" maxlength="40">
+                    <button id="logGratitudeBtn" class="button button-gratitude">Log Gratitude</button>
+                </div>
+            </div>
+        </div>
+
         <!-- Coping Techniques Section -->
         <div class="coping-section">
-            <h2>Coping Techniques 🧠</h2>
-            <p class="section-subtitle">Care for yourself & your companion</p>
+            <h2>Quick Coping Techniques 🧠</h2>
+            <p class="section-subtitle">Instant wellness activities</p>
             <div class="button-group-large">
-                <button id="breatheBtn" class="button button-breathe">Breathing Exercise 🫁</button>
-                <button id="journalBtn" class="button button-journal">Journaling 📔</button>
-                <button id="musicBtn" class="button button-music">Listen to Music 🎵</button>
+                <button id="breatheBtn" class="button button-breathe">Breathing 🫁</button>
+                <button id="journalBtn" class="button button-journal">Journal 📔</button>
+                <button id="musicBtn" class="button button-music">Music 🎵</button>
                 <button id="gratitudeBtn" class="button button-gratitude">Gratitude 🙏</button>
-                <button id="socialBtn" class="button button-social">Social Time 👫</button>
+                <button id="socialBtn" class="button button-social">Social 👫</button>
             </div>
         </div>
 
         <!-- Food & Play Section -->
         <div class="food-play-section">
-            <h2>Food & Activities 🎮</h2>
+            <h2>Food & Play 🎮</h2>
             <div class="button-group-row">
-                <button id="healthyFoodBtn" class="button button-food">Healthy Food 🥗</button>
-                <button id="snackBtn" class="button button-snack">Snack 🍎</button>
+                <button id="healthyFoodBtn" class="button button-food">Healthy 🥗</button>
+                <button id="snackBtn" class="button button-snack">Treat 🍎</button>
                 <button id="playBtn" class="button button-play">Play 🎮</button>
             </div>
         </div>
