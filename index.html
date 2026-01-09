@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet Care Simulator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Pet name input -->
+        <div class="name-section">
+            <label for="petName">Pet Name:</label>
+            <input 
+                type="text" 
+                id="petName" 
+                placeholder="Enter pet name" 
+                maxlength="15"
+                value="Buddy"
+            >
+        </div>
+
+        <!-- Pet customization -->
+        <div class="customize-section">
+            <label>Choose Your Pet:</label>
+            <div class="pet-options">
+                <button class="pet-choice" data-pet="🦦">🦦 Otter</button>
+                <button class="pet-choice" data-pet="🦄">🦄 Unicorn</button>
+                <button class="pet-choice" data-pet="🐶">🐶 Dog</button>
+                <button class="pet-choice" data-pet="🐱">🐱 Cat</button>
+                <button class="pet-choice" data-pet="🐘">🐘 Elephant</button>
+            </div>
+        </div>
+
+        <!-- Pet display -->
+        <h1 id="petNameDisplay">Buddy</h1>
+        <div class="pet">
+            <p id="petEmoji">🦦</p>
+        </div>
+
+        <!-- Stats display -->
+        <div class="stats">
+            <div class="stat">
+                <label>Happiness:</label>
+                <div class="stat-bar">
+                    <div id="happinessBar" class="stat-fill"></div>
+                </div>
+                <span id="happinessText">50</span> / 100
+            </div>
+
+            <div class="stat">
+                <label>Energy:</label>
+                <div class="stat-bar">
+                    <div id="energyBar" class="stat-fill"></div>
+                </div>
+                <span id="energyText">50</span> / 100
+            </div>
+        </div>
+
+        <!-- Action buttons -->
+        <div class="button-group">
+            <button id="playBtn" class="button button-play">Play 🎮</button>
+            <button id="feedBtn" class="button button-feed">Feed 🍕</button>
+            <button id="restBtn" class="button button-rest">Rest 😴</button>
+        </div>
+
+        <!-- Status message -->
+        <div class="message" id="statusMessage"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
