@@ -11,8 +11,7 @@ let petStats = {
     happiness: 100,
     energy: 50,
     health: 50,
-    hunger: 50,
-    cleanliness: 50
+    hunger: 50
 };
 
 let streaks = {
@@ -76,8 +75,6 @@ const healthBar = document.getElementById('healthBar');
 const healthText = document.getElementById('healthText');
 const hungerBar = document.getElementById('hungerBar');
 const hungerText = document.getElementById('hungerText');
-const cleanlinessBar = document.getElementById('cleanlinessBar');
-const cleanlinessText = document.getElementById('cleanlinessText');
 const petEmoji = document.getElementById('petEmoji');
 const petMood = document.getElementById('petMood');
 const petNameDisplay = document.getElementById('petNameDisplay');
@@ -124,8 +121,7 @@ function updateDisplay() {
         { bar: happinessBar, text: happinessText, value: petStats.happiness },
         { bar: energyBar, text: energyText, value: petStats.energy },
         { bar: healthBar, text: healthText, value: petStats.health },
-        { bar: hungerBar, text: hungerText, value: petStats.hunger },
-        { bar: cleanlinessBar, text: cleanlinessText, value: petStats.cleanliness }
+        { bar: hungerBar, text: hungerText, value: petStats.hunger }
     ];
 
     stats.forEach(stat => {
@@ -282,7 +278,6 @@ function logWellnessActivity() {
 
     petStats.energy = Math.min(petStats.energy + 20, 100);
     petStats.health = Math.min(petStats.health + 25, 100);
-    petStats.cleanliness = Math.max(petStats.cleanliness - 5, 0);
     points += 15;
     activityCounts.wellnessLogged += 1;
 
@@ -425,8 +420,83 @@ function loadData() {
 }
 
 // ============================================
+// DAILY TASKS FUNCTION
+// ============================================
+
+function completeTask(taskKey) {
+    if (dailyTasks[taskKey].completed) {
+        showMessage('Already completed this task today!');
+        return;
+    }
+
+    // Check if we're within the time window
+    const now = new Date().getHours();
+    const timeWindow = dailyTasks[taskKey].timeWindow;
+    
+    if (now < timeWindow.start || now >= timeWindow.end) {
+        showMessage(`This task is available between ${timeWindow.start}:00 and ${timeWindow.end}:00`);
+        return;
+    }
+
+    // Mark task as completed
+    dailyTasks[taskKey].completed = true;
+    
+    // Reward the player
+    petStats.happiness = Math.min(petStats.happiness + 15, 100);
+    petStats.health = Math.min(petStats.health + 10, 100);
+    points += 25;
+    activityCounts.tasksCompleted = (activityCounts.tasksCompleted || 0) + 1;
+    
+    // Update streak
+    const today = new Date().toDateString();
+    if (streaks.lastTaskDate === today) {
+        // Already updated today
+    } else {
+        streaks.lastTaskDate = today;
+        streaks.tasks += 1;
+    }
+
+    // Check achievements
+    if (achievements.taskChampion && activityCounts.tasksCompleted >= achievements.taskChampion.target) {
+        achievements.taskChampion.unlocked = true;
+    }
+
+    updateDisplay();
+    updateStreakDisplay();
+    checkAchievements();
+    showMessage(`Task completed! +25 points 🎉`);
+    showWellnessTip();
+}
+
+function updateTaskDisplay() {
+    taskButtons.forEach(button => {
+        const taskKey = button.getAttribute('data-task');
+        const task = dailyTasks[taskKey];
+        const taskCard = document.getElementById(`task-${taskKey}`);
+        
+        if (task.completed) {
+            button.textContent = 'Completed ✓';
+            button.disabled = true;
+            if (taskCard) taskCard.style.opacity = '0.6';
+        } else {
+            button.textContent = 'Complete';
+            button.disabled = false;
+            if (taskCard) taskCard.style.opacity = '1';
+        }
+    });
+}
+
+// ============================================
 // EVENT LISTENERS
 // ============================================
+
+// Task buttons
+taskButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+        const taskKey = btn.getAttribute('data-task');
+        completeTask(taskKey);
+    });
+});
 
 // Real-world action buttons
 if (logSnackBtn) logSnackBtn.addEventListener('click', logSnack);
@@ -490,12 +560,31 @@ if (modalClose && achievementsModal) {
 }
 
 // ============================================
+// DAILY RESET FUNCTION
+// ============================================
+
+function checkDailyReset() {
+    const today = new Date().toDateString();
+    if (lastResetDate !== today) {
+        // Reset daily tasks
+        dailyTasks.groom.completed = false;
+        dailyTasks.exercise.completed = false;
+        dailyTasks.meditate.completed = false;
+        lastResetDate = today;
+        updateTaskDisplay();
+        saveData();
+    }
+}
+
+// ============================================
 // INITIALIZATION
 // ============================================
 
 loadData();
+checkDailyReset();
 updateDisplay();
 updateStreakDisplay();
+updateTaskDisplay();
 displayActivityLog();
 showWellnessTip();
 
