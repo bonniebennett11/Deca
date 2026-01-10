@@ -244,6 +244,91 @@ function removeActivityLog(index) {
 }
 
 // ============================================
+// REAL-WORLD ACTION FUNCTIONS
+// ============================================
+
+function logSnack() {
+    const snackText = snackInput ? snackInput.value.trim() : '';
+    
+    if (!snackText) {
+        showMessage('What did you eat? 🍎');
+        return;
+    }
+
+    petStats.hunger = Math.min(petStats.hunger + 30, 100);
+    petStats.health = Math.min(petStats.health + 10, 100);
+    points += 10;
+    activityCounts.snacksLogged += 1;
+
+    if (achievements.snackMaster && activityCounts.snacksLogged >= achievements.snackMaster.target) {
+        achievements.snackMaster.unlocked = true;
+    }
+
+    updateDisplay();
+    checkAchievements();
+    showMessage(`Yum! ${snackText} was delicious! 🍎 +10 points`);
+    showWellnessTip();
+    
+    if (snackInput) snackInput.value = '';
+}
+
+function logWellnessActivity() {
+    const activityText = activityInput ? activityInput.value.trim() : '';
+    
+    if (!activityText) {
+        showMessage('What activity did you do? 💪');
+        return;
+    }
+
+    petStats.energy = Math.min(petStats.energy + 20, 100);
+    petStats.health = Math.min(petStats.health + 25, 100);
+    petStats.cleanliness = Math.max(petStats.cleanliness - 5, 0);
+    points += 15;
+    activityCounts.wellnessLogged += 1;
+
+    if (achievements.wellness && activityCounts.wellnessLogged >= achievements.wellness.target) {
+        achievements.wellness.unlocked = true;
+    }
+
+    updateDisplay();
+    checkAchievements();
+    showMessage(`Great activity! ${activityText} was awesome! 💪 +15 points`);
+    showWellnessTip();
+    
+    if (activityInput) activityInput.value = '';
+}
+
+function logGratitude() {
+    const gratitudeText = gratitudeInput ? gratitudeInput.value.trim() : '';
+    
+    if (!gratitudeText) {
+        showMessage('What are you grateful for? 🙏');
+        return;
+    }
+
+    gratitudeEntries.push({
+        text: gratitudeText,
+        date: new Date().toLocaleDateString()
+    });
+
+    petStats.happiness = Math.min(petStats.happiness + 20, 100);
+    petStats.health = Math.min(petStats.health + 15, 100);
+    points += 20;
+    activityCounts.gratitudeLogged += 1;
+
+    if (achievements.gratefulHeart && activityCounts.gratitudeLogged >= achievements.gratefulHeart.target) {
+        achievements.gratefulHeart.unlocked = true;
+    }
+
+    updateDisplay();
+    checkAchievements();
+    showMessage(`Beautiful gratitude entry! 🙏 +20 points`);
+    showWellnessTip();
+    
+    if (gratitudeInput) gratitudeInput.value = '';
+}
+
+// ============================================
 // ACHIEVEMENTS
 // ============================================
 
@@ -342,6 +427,24 @@ function loadData() {
 // ============================================
 // EVENT LISTENERS
 // ============================================
+
+// Real-world action buttons
+if (logSnackBtn) logSnackBtn.addEventListener('click', logSnack);
+if (logActivityBtn) logActivityBtn.addEventListener('click', logWellnessActivity);
+if (logGratitudeBtn) logGratitudeBtn.addEventListener('click', logGratitude);
+
+// Real-world input enter key
+if (snackInput) snackInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') logSnack();
+});
+
+if (activityInput) activityInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') logWellnessActivity();
+});
+
+if (gratitudeInput) gratitudeInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') logGratitude();
+});
 
 // Activity logging buttons
 if (logActivityLogBtn) logActivityLogBtn.addEventListener('click', logActivityLog);
